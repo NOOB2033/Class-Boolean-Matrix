@@ -150,13 +150,15 @@ void BoolVector::fullSet1()
 
 void BoolVector::set0(int index, int value)
 {
-	if (index < 0 || index >= len_ || value < 0 || value >= len_)
+	if (index < 0 || index >= len_)
 		throw Invalid_index;
-	if (index > value)
-		index ^= value ^= index ^= value;
-	if (index != value) {
+	if (value < 0 || value >= len_)
+		throw Invalid_value;
+	if (len_ - index <= value)
+		value = len_ - index - 1;
+	if (value > 1) {
 		unsigned char mask;
-		for (int i = index; i <= value; i++) {
+		for (int i = index; i < value + index; i++) {
 			mask = 128; // 10000000
 			int byte = mem_ - 1 - (len_ - i - 1) / BYTE;
 			if (byte == 0)
@@ -167,19 +169,21 @@ void BoolVector::set0(int index, int value)
 		}
 	}
 	else
-		componentInversion(index);
+		set0(index);
 }
 
 
 void BoolVector::set1(int index, int value)
 {
-	if (index < 0 || index >= len_ || value < 0 || value >= len_)
+	if (index < 0 || index >= len_)
 		throw Invalid_index;
-	if (index > value)
-		index ^= value ^= index ^= value;
-	if (index != value) {
+	if (value < 0 || value >= len_)
+		throw Invalid_size;
+	if (len_ - index <= value)
+		value = len_ - index - 1;
+	if (value > 1) {
 		unsigned char mask;
-		for (int i = index; i <= value; i++) {
+		for (int i = index; i < value + index; i++) {
 			mask = 128; // 10000000
 			int byte = mem_ - 1 - (len_ - i - 1) / BYTE;
 			if (byte == 0)
@@ -190,7 +194,7 @@ void BoolVector::set1(int index, int value)
 		}
 	}
 	else
-		componentInversion(index);
+		set1(index);
 }
 
 
@@ -256,14 +260,14 @@ BoolVector BoolVector::operator~()
 }
 
 
-BoolVector BoolVector::operator=(const BoolVector& bv)
+BoolVector BoolVector::operator=(const BoolVector& other)
 {
-	if (this != &bv) {
+	if (this != &other) {
 		delete[] bv_;
-		bv_ = new unsigned char[mem_ = bv.mem_];
-		len_ = bv.len_;
+		bv_ = new unsigned char[mem_ = other.mem_];
+		len_ = other.len_;
 		for (int i = 0; i < mem_; i++)
-			bv_[i] = bv.bv_[i];
+			bv_[i] = other.bv_[i];
 	}
 	return *this;
 }

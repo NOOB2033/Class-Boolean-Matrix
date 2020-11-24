@@ -1,4 +1,4 @@
-#include"BoolVectorComponent.h"
+#include"BoolVector.h"
 
 
 BoolVectorComponent::BoolVectorComponent(BoolVector* bv, int index, int value)

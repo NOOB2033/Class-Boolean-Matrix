@@ -2,8 +2,8 @@
 #include<iostream>
 
 
-#include"BoolVectorComponent.h"
-
+class BoolVector;
+class BoolVectorComponent;
 
 class BoolVector
 {
@@ -41,4 +41,33 @@ public:
 	BoolVector operator^=(const BoolVector&);
 	BoolVector operator^(const BoolVector&);
 	BoolVectorComponent operator[](int);
+};
+
+
+class BoolVectorComponent
+{
+private:
+	BoolVector* bv_;
+	int index_, value_;
+	bool flag_ = false; // Для очистки памяти
+public:
+	BoolVectorComponent(BoolVector*, int, int);
+	BoolVectorComponent(const BoolVectorComponent&);
+	~BoolVectorComponent();
+	friend std::ostream& operator<<(std::ostream&, const BoolVectorComponent&);
+	BoolVectorComponent operator=(int);
+	BoolVectorComponent operator=(const BoolVectorComponent&);
+	BoolVectorComponent operator|=(int);
+	BoolVectorComponent operator|(int);
+	BoolVectorComponent operator&=(int);
+	BoolVectorComponent operator&(int);
+	BoolVectorComponent operator^=(int);
+	BoolVectorComponent operator^(int);
+	BoolVectorComponent operator|=(const BoolVectorComponent&);
+	BoolVectorComponent operator|(const BoolVectorComponent&);
+	BoolVectorComponent operator&=(const BoolVectorComponent&);
+	BoolVectorComponent operator&(const BoolVectorComponent&);
+	BoolVectorComponent operator^=(const BoolVectorComponent&);
+	BoolVectorComponent operator^(const BoolVectorComponent&);
+	BoolVectorComponent operator~();
 };

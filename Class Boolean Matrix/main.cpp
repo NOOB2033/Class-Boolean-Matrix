@@ -2,14 +2,12 @@
 
 
 #include"Enum.h"
-#include"BoolVector.h"
+#include"BoolMatrix.h"
 
 
 int main()
 {
-	BoolVector bv1(10, 0);
-	bv1[1] = 1;
-	std::cout << bv1[1];
+	setlocale(LC_ALL, "Russian");
 	try
 	{
 	}
@@ -23,6 +21,15 @@ int main()
 		case Invalid_index:
 			std::cout << "Неверный индекс";
 			exit(1);
+		case Invalid_column:
+			std::cout << "Невернаый столбец";
+			exit(2);
+		case Invalid_line:
+			std::cout << "Неверная строка";
+			exit(3);
+		case Invalid_value:
+			std::cout << "Неверное значение";
+			exit(4);
 		default:
 			std::cout << "Что-то пошло не так";
 			exit(-1);
