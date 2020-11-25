@@ -92,8 +92,8 @@ std::ostream& operator<<(std::ostream& out, const BoolVector& bv)
 			if (bv.bv_[i] & mask)
 				std::cout << 1;
 			else
-				std::cout << 0;
-		std::cout << " ";
+				out << 0;
+		out << " ";
 	}
 	return out;
 }
