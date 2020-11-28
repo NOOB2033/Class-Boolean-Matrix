@@ -255,12 +255,13 @@ int BoolVector::weight()
 
 BoolVector BoolVector::operator~()
 {
-	fullInversion();
-	return *this;
+	BoolVector bv(*this);
+	bv.fullInversion();
+	return bv;
 }
 
 
-BoolVector BoolVector::operator=(const BoolVector& other)
+BoolVector& BoolVector::operator=(const BoolVector& other)
 {
 	if (this != &other) {
 		delete[] bv_;
@@ -273,7 +274,7 @@ BoolVector BoolVector::operator=(const BoolVector& other)
 }
 
 
-BoolVector BoolVector::operator>>=(int value)
+BoolVector& BoolVector::operator>>=(int value)
 {
 	if (value <= 0)
 		return *this;
@@ -299,7 +300,7 @@ BoolVector BoolVector::operator>>(int value)
 }
 
 
-BoolVector BoolVector::operator<<=(int value)
+BoolVector& BoolVector::operator<<=(int value)
 {
 
 	if (value <= 0)
@@ -329,7 +330,7 @@ BoolVector BoolVector::operator<<(int value)
 }
 
 
-BoolVector BoolVector::operator|=(const BoolVector& other)
+BoolVector& BoolVector::operator|=(const BoolVector& other)
 {
 	int min = mem_;
 	if (mem_ > other.mem_)
@@ -346,7 +347,7 @@ BoolVector BoolVector::operator|(const BoolVector& other)
 }
 
 
-BoolVector BoolVector::operator&=(const BoolVector& other)
+BoolVector& BoolVector::operator&=(const BoolVector& other)
 {
 	int min = mem_;
 	if (mem_ > other.mem_)
@@ -363,7 +364,7 @@ BoolVector BoolVector::operator&(const BoolVector& other)
 }
 
 
-BoolVector BoolVector::operator^=(const BoolVector& other)
+BoolVector& BoolVector::operator^=(const BoolVector& other)
 {
 	int min = mem_;
 	if (mem_ > other.mem_)

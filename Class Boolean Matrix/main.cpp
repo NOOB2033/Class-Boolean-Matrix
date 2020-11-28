@@ -22,7 +22,7 @@ int main()
 			std::cout << "Неверный индекс";
 			exit(1);
 		case Invalid_column:
-			std::cout << "Невернаый столбец";
+			std::cout << "Неверный столбец";
 			exit(2);
 		case Invalid_line:
 			std::cout << "Неверная строка";

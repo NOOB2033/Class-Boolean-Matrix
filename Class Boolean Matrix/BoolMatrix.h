@@ -25,12 +25,12 @@ public:
 	BoolVector fullConjunction();
 	BoolVector fullDisjunction();
 	BoolMatrix operator~();
-	BoolMatrix operator=(const BoolMatrix&);
-	BoolMatrix operator|=(const BoolMatrix&);
+	BoolMatrix& operator=(const BoolMatrix&);
+	BoolMatrix& operator|=(const BoolMatrix&);
 	BoolMatrix operator|(const BoolMatrix&);
-	BoolMatrix operator&=(const BoolMatrix&);
+	BoolMatrix& operator&=(const BoolMatrix&);
 	BoolMatrix operator&(const BoolMatrix&);
-	BoolMatrix operator^=(const BoolMatrix&);
+	BoolMatrix& operator^=(const BoolMatrix&);
 	BoolMatrix operator^(const BoolMatrix&);
 	BoolVector& operator[](int);
 };

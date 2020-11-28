@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& out, const BoolVectorComponent& bvcompone
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator=(int value)
+BoolVectorComponent& BoolVectorComponent::operator=(int value)
 {
 	if (value)
 		bv_->set1(index_);
@@ -44,7 +44,7 @@ BoolVectorComponent BoolVectorComponent::operator=(int value)
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator=(const BoolVectorComponent& other)
+BoolVectorComponent& BoolVectorComponent::operator=(const BoolVectorComponent& other)
 {
 	if (other.value_)
 		bv_->set1(index_);
@@ -54,7 +54,7 @@ BoolVectorComponent BoolVectorComponent::operator=(const BoolVectorComponent& ot
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator|=(int value)
+BoolVectorComponent& BoolVectorComponent::operator|=(int value)
 {
 	if (value_ || value) {
 		bv_->set1(index_);
@@ -74,7 +74,7 @@ BoolVectorComponent BoolVectorComponent::operator|(int value)
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator&=(int value)
+BoolVectorComponent& BoolVectorComponent::operator&=(int value)
 {
 	if (value_ && value) {
 		bv_->set1(index_);
@@ -94,7 +94,7 @@ BoolVectorComponent BoolVectorComponent::operator&(int value)
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator^=(int value)
+BoolVectorComponent& BoolVectorComponent::operator^=(int value)
 {
 	if (value_ ^ value) {
 		bv_->set1(index_);
@@ -114,7 +114,7 @@ BoolVectorComponent BoolVectorComponent::operator^(int value)
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator|=(const BoolVectorComponent& other)
+BoolVectorComponent& BoolVectorComponent::operator|=(const BoolVectorComponent& other)
 {
 	return *this |= other.value_;
 }
@@ -126,7 +126,7 @@ BoolVectorComponent BoolVectorComponent::operator|(const BoolVectorComponent& ot
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator&=(const BoolVectorComponent& other)
+BoolVectorComponent& BoolVectorComponent::operator&=(const BoolVectorComponent& other)
 {
 	return *this &= other.value_;
 }
@@ -138,7 +138,7 @@ BoolVectorComponent BoolVectorComponent::operator&(const BoolVectorComponent& ot
 }
 
 
-BoolVectorComponent BoolVectorComponent::operator^=(const BoolVectorComponent& other)
+BoolVectorComponent& BoolVectorComponent::operator^=(const BoolVectorComponent& other)
 {
 	return *this ^= other.value_;
 }

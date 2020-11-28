@@ -173,13 +173,14 @@ BoolVector BoolMatrix::fullDisjunction()
 
 BoolMatrix BoolMatrix::operator~()
 {
+    BoolMatrix bm(*this);
     for (int i = 0; i < line_; i++)
-        bm_[i].fullInversion();
-    return *this;
+        bm[i].fullInversion();
+    return bm;
 }
 
 
-BoolMatrix BoolMatrix::operator=(const BoolMatrix& other)
+BoolMatrix& BoolMatrix::operator=(const BoolMatrix& other)
 {
     if (this != &other) {
         delete[] bm_;
@@ -192,7 +193,7 @@ BoolMatrix BoolMatrix::operator=(const BoolMatrix& other)
 }
 
 
-BoolMatrix BoolMatrix:: operator|=(const BoolMatrix& other)
+BoolMatrix& BoolMatrix::operator|=(const BoolMatrix& other)
 {
     if (line_ != other.line_)
         throw Invalid_size;
@@ -202,13 +203,13 @@ BoolMatrix BoolMatrix:: operator|=(const BoolMatrix& other)
 }
 
 
-BoolMatrix BoolMatrix:: operator|(const BoolMatrix& other)
+BoolMatrix BoolMatrix::operator|(const BoolMatrix& other)
 {
     return BoolMatrix(*this) |= other;
 }
 
 
-BoolMatrix BoolMatrix:: operator&=(const BoolMatrix& other)
+BoolMatrix& BoolMatrix::operator&=(const BoolMatrix& other)
 {
     if (line_ != other.line_)
         throw Invalid_size;
@@ -218,13 +219,13 @@ BoolMatrix BoolMatrix:: operator&=(const BoolMatrix& other)
 }
 
 
-BoolMatrix BoolMatrix:: operator&(const BoolMatrix& other)
+BoolMatrix BoolMatrix::operator&(const BoolMatrix& other)
 {
     return BoolMatrix(*this) &= other;
 }
 
 
-BoolMatrix BoolMatrix:: operator^=(const BoolMatrix& other)
+BoolMatrix& BoolMatrix::operator^=(const BoolMatrix& other)
 {
     if (line_ != other.line_)
         throw Invalid_size;
@@ -234,7 +235,7 @@ BoolMatrix BoolMatrix:: operator^=(const BoolMatrix& other)
 }
 
 
-BoolMatrix BoolMatrix:: operator^(const BoolMatrix& other)
+BoolMatrix BoolMatrix::operator^(const BoolMatrix& other)
 {
     return BoolMatrix(*this) ^= other;
 }
