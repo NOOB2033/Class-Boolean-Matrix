@@ -1,8 +1,7 @@
 #include<iostream>
-
-
 #include"Enum.h"
 #include"BoolMatrix.h"
+#include"BoolVector.h"
 
 
 int main()

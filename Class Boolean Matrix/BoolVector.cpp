@@ -38,7 +38,7 @@ BoolVector::BoolVector(const char* str)
 	for (int i = 0; i < mem_; i++)
 		bv_[i] = 0;
 	for (int i = 0; i < len_; i++)
-		if (str[i] == '1')
+		if (str[i] != '0')
 			set1(i);
 }
 
@@ -64,8 +64,8 @@ std::istream& operator>>(std::istream& in, const BoolVector& bv)
 	int i = 0;
 	for (i; i < bv.len_ % bv.BYTE; i++) { // Для нулевого байта, если он не полный(используются не все 8 бит)
 		in >> c;
-		if (c != '0' && c != '1')
-			c = '0';
+		if (c != '0')
+			c = '1';
 		bv.bv_[0] <<= 1;
 		bv.bv_[0] |= c - '0';
 	}
@@ -74,8 +74,8 @@ std::istream& operator>>(std::istream& in, const BoolVector& bv)
 	for (i; i < bv.mem_; i++)
 		for (int j = 0; j < bv.BYTE; j++) {
 			in >> c;
-			if (c != '0' && c != '1')
-				c = '0';
+			if (c != '0')
+				c = '1';
 			bv.bv_[i] <<= 1;
 			bv.bv_[i] |= c - '0';
 		}
@@ -105,10 +105,10 @@ void BoolVector::set0(int index)
 		throw Invalid_index;
 	unsigned char mask = 128; // 10000000
 	int byte = mem_ - 1 - (len_ - index - 1) / BYTE;
-	if (byte == 0) // отдельно для нулевого байта, если он не полный
-		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
-	else
+	if (byte) // отдельно для нулевого байта, если он не полный
 		mask >>= (index - len_ % BYTE) % BYTE;
+	else
+		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 	bv_[byte] &= ~mask;
 }
 
@@ -119,10 +119,10 @@ void BoolVector::set1(int index)
 		throw Invalid_index;
 	unsigned char mask = 128; // 10000000
 	int byte = mem_ - 1 - (len_ - index - 1) / BYTE;
-	if (byte == 0)
-		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
-	else
+	if (byte) // отдельно для нулевого байта, если он не полный
 		mask >>= (index - len_ % BYTE) % BYTE;
+	else
+		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 	bv_[byte] |= mask;
 }
 
@@ -161,10 +161,10 @@ void BoolVector::set0(int index, int value)
 		for (int i = index; i < value + index; i++) {
 			mask = 128; // 10000000
 			int byte = mem_ - 1 - (len_ - i - 1) / BYTE;
-			if (byte == 0)
-				mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + i;
+			if (byte) // отдельно для нулевого байта, если он не полный
+				mask >>= (index - len_ % BYTE) % BYTE;
 			else
-				mask >>= (i - len_ % BYTE) % BYTE;
+				mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 			bv_[byte] &= ~mask;
 		}
 	}
@@ -186,10 +186,10 @@ void BoolVector::set1(int index, int value)
 		for (int i = index; i < value + index; i++) {
 			mask = 128; // 10000000
 			int byte = mem_ - 1 - (len_ - i - 1) / BYTE;
-			if (byte == 0)
-				mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + i;
+			if (byte) // отдельно для нулевого байта, если он не полный
+				mask >>= (index - len_ % BYTE) % BYTE;
 			else
-				mask >>= (i - len_ % BYTE) % BYTE;
+				mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 			bv_[byte] |= mask;
 		}
 	}
@@ -223,10 +223,10 @@ void BoolVector::componentInversion(int index)
 		throw Invalid_index;
 	unsigned char mask = 128; // 10000000
 	int byte = mem_ - 1 - (len_ - index - 1) / BYTE;
-	if (byte == 0)
-		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
-	else
+	if (byte) // отдельно для нулевого байта, если он не полный
 		mask >>= (index - len_ % BYTE) % BYTE;
+	else
+		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 	bv_[byte] ^= mask;
 }
 
@@ -385,9 +385,9 @@ BoolVectorComponent BoolVector::operator[](int index)
 {
 	unsigned char mask = 128; // 10000000
 	int byte = mem_ - 1 - (len_ - index - 1) / BYTE;
-	if (byte == 0)
-		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
-	else
+	if (byte) // отдельно для нулевого байта, если он не полный
 		mask >>= (index - len_ % BYTE) % BYTE;
+	else
+		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
 	return BoolVectorComponent(this, index, (bv_[byte] & mask));
 }
