@@ -4,9 +4,25 @@
 #include"BoolVector.h"
 
 
+void sortMatrix(BoolMatrix bm, int* mass, int size)
+{
+
+}
+
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
+	BoolVector bv(8, 0);
+	bv.set1(2, 8);
+	std::cout << bv;
+	/*int size;
+	std::cin >> size;
+	BoolMatrix bm(size, size, 0);
+	int* mass = new int[size];
+	for (int i = 0; i < size; i++)
+		mass[i] = i;
+	sortMatrix(bm, mass, size);*/
 	try
 	{
 	}
