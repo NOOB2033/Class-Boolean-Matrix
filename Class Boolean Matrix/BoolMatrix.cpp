@@ -77,10 +77,10 @@ void BoolMatrix::inversion(int index, int value, int line)
         throw Invalid_column;
     if (line < 0 || line >= line_)
         throw Invalid_line;
-    if (value < 0 || value >= column_)
+    if (value <= 0 || value > column_)
         throw Invalid_value;
-    if (column_ - index <= value)
-        value = column_ - index - 1;
+    if (column_ - index < value)
+        value = column_ - index;
     for (int i = index; i < value + index; i++)
         bm_[line].componentInversion(i);
 }
@@ -112,10 +112,10 @@ void BoolMatrix::set0(int index, int value, int line)
         throw Invalid_column;
     if (line < 0 || line >= line_)
         throw Invalid_line;
-    if (value < 0 || value >= column_)
+    if (value <= 0 || value > column_)
         throw Invalid_value;
-    if (column_ - index <= value)
-        value = column_ - index - 1;
+    if (column_ - index < value)
+        value = column_ - index;
     for (int i = index; i < value + index; i++)
         bm_[line].set0(i);
 }
@@ -127,10 +127,10 @@ void BoolMatrix::set1(int index, int value, int line)
         throw Invalid_column;
     if (line < 0 || line >= line_)
         throw Invalid_line;
-    if (value < 0 || value >= column_)
+    if (value <= 0 || value > column_)
         throw Invalid_value;
-    if (column_ - index <= value)
-        value = column_ - index - 1;
+    if (column_ - index < value)
+        value = column_ - index;
     for (int i = index; i < value + index; i++)
         bm_[line].set1(i);
 }

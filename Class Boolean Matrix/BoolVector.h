@@ -27,6 +27,7 @@ public:
 	void set1(int index, int value);
 	void fullInversion();
 	void componentInversion(int);
+	bool getBit(int);
 	int weight();
 	BoolVector operator~();
 	BoolVector& operator=(const BoolVector&);

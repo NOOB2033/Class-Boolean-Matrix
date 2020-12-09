@@ -231,6 +231,20 @@ void BoolVector::componentInversion(int index)
 }
 
 
+bool BoolVector::getBit(int index)
+{
+	if (index < 0 || index >= len_)
+		throw Invalid_index;
+	unsigned char mask = 128; // 10000000
+	int byte = mem_ - 1 - (len_ - index - 1) / BYTE;
+	if (byte) // отдельно для нулевого байта, если он не полный
+		mask >>= (index - len_ % BYTE) % BYTE;
+	else
+		mask >>= BYTE - (len_ - (mem_ - 1) * BYTE) + index;
+	return bv_[byte] & mask;
+}
+
+
 int BoolVector::weight()
 {
 	int weight = 0, i = 0;
