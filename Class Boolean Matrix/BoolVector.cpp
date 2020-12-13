@@ -349,6 +349,8 @@ BoolVector& BoolVector::operator|=(const BoolVector& other)
 	int min = mem_;
 	if (mem_ > other.mem_)
 		min = other.mem_;
+	if (len_ < other.len_)
+		len_ = other.len_;
 	for (int i = 0; i < min; i++)
 		bv_[mem_ - i - 1] |= other.bv_[other.mem_ - i - 1];
 	return *this;
@@ -366,6 +368,8 @@ BoolVector& BoolVector::operator&=(const BoolVector& other)
 	int min = mem_;
 	if (mem_ > other.mem_)
 		min = other.mem_;
+	if (len_ < other.len_)
+		len_ = other.len_;
 	for (int i = 0; i < min; i++)
 		bv_[mem_ - i - 1] &= other.bv_[other.mem_ - i - 1];
 	return *this;
@@ -383,6 +387,8 @@ BoolVector& BoolVector::operator^=(const BoolVector& other)
 	int min = mem_;
 	if (mem_ > other.mem_)
 		min = other.mem_;
+	if (len_ < other.len_)
+		len_ = other.len_;
 	for (int i = 0; i < min; i++)
 		bv_[mem_ - i - 1] ^= other.bv_[other.mem_ - i - 1];
 	return *this;
